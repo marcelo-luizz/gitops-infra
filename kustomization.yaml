@@ -1,0 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1 
+kind: Kustomization 
+resources: 
+- ../../tools/cert-manager/application.yaml # Application para cert-manager - ../../tools/external-secrets/application.yaml # Application para external secrets 
+- ../../manifests/secrets/application.yaml # Application para secrets - ../../manifests/deployments/application.yaml # Application para deployments 
