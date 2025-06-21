@@ -1,36 +1,32 @@
-apiVersion: argoproj.io/v1alpha1 
-kind: ApplicationSet 
-metadata: 
-name: all-environments-apps 
-namespace: argocd 
-spec: 
-generators: 
-- git: 
-repoURL: https://gitlab-new.jeitto.com.br/devops/jeitto-iac/gitops infrastructure-repo.git # Seu repositório GitOps 
-revision: HEAD 
-directories: 
-- path: environments/* # Escaneia todos os subdiretórios em 
-'environments/' 
-template: 
-metadata: 
-name: '{{.path.basename}}-cluster-apps' # Nome da Application baseado no nome do ambiente (ex: dev-cluster-apps) 
-labels: 
-argocd.argoproj.io/managed-by: argocd 
-spec: 
-project: default # Ou um projeto ArgoCD específico para infraestrutura source: 
-repoURL: https://gitlab-new.jeitto.com.br/devops/jeitto-iac/gitops infrastructure-repo.git 
-targetRevision: HEAD 
-path: '{{.path}}/cluster-config/argocd-apps' # Caminho para os manifests do ambiente 
-destination: 
-# Para um ambiente multi-cluster, você precisa registrar cada cluster no ArgoCD 
-# e usar o nome do cluster registrado aqui. 
-# Exemplo: Se o cluster 'dev' foi registrado como 'dev-cluster' no ArgoCD 
-# server: https://kubernetes.default.svc # Este é o cluster onde o ArgoCD está rodando (cluster devops) 
-name: '{{.path.basename}}-cluster' # Nome do cluster de destino registrado no ArgoCD (ex: dev-cluster, int-cluster) 
-namespace: argocd # Namespace onde as Applications serão criadas (pode ser outro, se preferir) 
-syncPolicy: 
-automated: 
-prune: true 
-selfHeal: true 
-syncOptions: 
-- CreateNamespace=true 
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: all-environments-apps
+  namespace: default
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/marcelo-luizz/gitops-infra.git
+        revision: HEAD
+        directories:
+          - path: environments/*
+  template:
+    metadata:
+      name: '{{.path.basename}}-cluster-apps'
+      labels:
+        argocd.argoproj.io/managed-by: argocd
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/marcelo-luizz/gitops-infra.git
+        targetRevision: HEAD
+        path: '{{.path}}/cluster-config/argocd-apps'
+      destination:
+        name: '{{.path.basename}}-cluster'
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
