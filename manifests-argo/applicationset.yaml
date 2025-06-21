@@ -12,7 +12,7 @@ spec:
           - path: environments/*
   template:
     metadata:
-      name: '{{.path.basename}}-cluster-apps'
+      name: '{{.path}}-cluster-apps'
       labels:
         argocd.argoproj.io/managed-by: argocd
     spec:
@@ -22,7 +22,7 @@ spec:
         targetRevision: HEAD
         path: '{{.path}}/cluster-config/argocd-apps'
       destination:
-        name: '{{.path.basename}}-cluster'
+        name: '{{.path}}-cluster'
         namespace: default
       syncPolicy:
         automated:

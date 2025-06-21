@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: all-environments-apps
+  namespace: default
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/marcelo-luizz/gitops-infra.git
+        revision: HEAD
+        directories:
+          - path: environments/*
+  template:
+    metadata:
+      name: '{{.path.basename}}-cluster-apps'
+      labels:
+        argocd.argoproj.io/managed-by: argocd
+        environment: '{{.path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/marcelo-luizz/gitops-infra.git
+        targetRevision: HEAD
+        path: '{{.path}}/cluster-config/argocd-apps'
+      destination:
+        name: '{{.path.basename}}-cluster'
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

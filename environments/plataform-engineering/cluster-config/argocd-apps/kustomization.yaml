@@ -1,0 +1,5 @@
+kustomization.yamlapiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../tools/cert-manager/application.yaml
+  - ../../tools/external-secrets/application.yaml       
