@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: external-secrets-devops-labs
-  namespace: argocd # Onde a Application será criada no cluster devops
+  namespace: default # Onde a Application será criada no cluster devops
 spec:
   project: default
   source:

@@ -13,15 +13,12 @@ spec:
   template:
     metadata:
       name: '{{.path.basename}}-cluster-apps'
-      labels:
-        argocd.argoproj.io/managed-by: argocd
-        environment: '{{.path.basename}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/marcelo-luizz/gitops-infra.git
         targetRevision: HEAD
-        path: '{{.path}}/cluster-config/argocd-apps'
+        path: 'environments/{{.path.basename}}/cluster-config/argocd-apps'
       destination:
         name: '{{.path.basename}}-cluster'
         namespace: default

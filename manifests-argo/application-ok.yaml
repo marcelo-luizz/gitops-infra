@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-application
+spec:
+  # Onde irá ser deployado
+  destination:
+    namespace: one-poc # Qual namespace de destino
+    server: https://34.151.212.25 # Qual o cluster
+  info:
+    - name: ""
+      value: ""
+  project: default # Qual o AppProject a Application pertence
+  source:
+    path: environments/devops-labs/manifests # Qual a pasta do repositório está o manifesto
+    repoURL: https://github.com/marcelo-luizz/gitops-infra.git # Qual o repositório
+    targetRevision: HEAD
+  syncPolicy:
+    # Para observar modificações no repositório e reaplicar em
+    # caso de mudanças
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true # Cria o namespace de destino
