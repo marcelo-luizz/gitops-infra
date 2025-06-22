@@ -12,15 +12,15 @@ spec:
           - path: environments/*
   template:
     metadata:
-      name: '{{.path.basename}}-cluster-apps'
+      name: 'cluster-devops-labs'
     spec:
       project: default
       source:
         repoURL: https://github.com/marcelo-luizz/gitops-infra.git
         targetRevision: HEAD
-        path: 'environments/{{.path.basename}}/cluster-config/argocd-apps'
+        path: environments/{{path.basename}}/cluster-config
       destination:
-        name: '{{.path.basename}}-cluster'
+        name: 'devops-labs-cluster'
         namespace: default
       syncPolicy:
         automated:
