@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - tools/cert-manager/application.yaml
   - tools/external-secrets/application.yaml
-  - tools/prometheus/application.yaml #Agrega aplicacoes do ambiente
+  - tools/prometheus/application.yaml 
+  - manifests/deployments/a
 
