@@ -9,7 +9,7 @@ spec:
     repoURL: https://prometheus-community.github.io/helm-charts
  # Repositório do Helm chart
     targetRevision: 27.20.1
-    chart: prometheus-community
+    chart: prometheus
     helm:
       valueFiles:
         - values.yaml # Values específicos do ambiente
