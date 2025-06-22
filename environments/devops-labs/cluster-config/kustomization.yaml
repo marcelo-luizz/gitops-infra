@@ -4,5 +4,5 @@ resources:
   - tools/cert-manager/application.yaml
   - tools/external-secrets/application.yaml
   - tools/prometheus/application.yaml 
-  - manifests/deployments/deploy.yaml
+  - manifests/deployments
 
