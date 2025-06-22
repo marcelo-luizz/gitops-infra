@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/marcelo-luizz/gitops-infra.git # Repositório do Helm chart
     targetRevision: HEAD
-    path: deploy.yaml
+    path: environments/devops-labs/cluster-config/manifests
   destination:
     name: devops-labs-cluster # Exemplo: 'dev-cluster', 'int-cluster', 'pre-prod-cluster', 'prod-cluster'
     namespace: nginx # Namespace onde o cert-manager será instalado no cluster de destino
