@@ -4,7 +4,7 @@ metadata:
   name: prometheus-devops-labs
   namespace: default # Onde a Application será criada no cluster devops
 spec:
-  project: default
+  project: gke-platform-engineering
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
  # Repositório do Helm chart
@@ -14,7 +14,7 @@ spec:
       valueFiles:
         - values.yaml # Values específicos do ambiente
   destination:
-    name: devops-labs-cluster # Exemplo: 'dev-cluster', 'int-cluster', 'pre-prod-cluster', 'prod-cluster'
+    name: gke-platform-engineering # Exemplo: 'dev-cluster', 'int-cluster', 'pre-prod-cluster', 'prod-cluster'
     namespace: prometheus # Namespace onde o external-secrets será instalado no cluster de destino
   syncPolicy:
     automated:
