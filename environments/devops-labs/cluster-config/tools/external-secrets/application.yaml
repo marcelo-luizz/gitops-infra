@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: external-secrets-devops-labs
+  name: external-secrets-platform-engineering
   namespace: sistemas # Onde a Application será criada no cluster devops
 spec:
   project: gke-platform-engineering
@@ -21,3 +21,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
