@@ -1,8 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager-devops-labs
-  namespace: default # Onde a Application será criada no cluster devops
+  name: cert-manager-platform-engineering
+  namespace: sistemas # Onde a Application será criada no cluster devops
 spec:
   project: gke-platform-engineering
   source:
@@ -21,3 +21,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
