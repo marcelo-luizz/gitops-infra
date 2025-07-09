@@ -1,8 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx-devops-labs
-  namespace: default # Onde a Application será criada no cluster devops
+  name: nginx-platform-engineering
+  namespace: sistemas # Onde a Application será criada no cluster devops
 spec:
   project: gke-platform-engineering
   source:
