@@ -2,15 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: nginx-devops-labs
-  namespace: default # Onde a Application será criada no cluster devops
+  namespace: sistemas # Onde a Application será criada no cluster devops
 spec:
-  project: default
+  project: gke-platform-engineering
   source:
     repoURL: https://github.com/marcelo-luizz/gitops-infra.git # Repositório do Helm chart
     targetRevision: HEAD
     path: environments/devops-labs/cluster-config/manifests/deployments/nginx-example
   destination:
-    name: devops-labs-cluster # Exemplo: 'dev-cluster', 'int-cluster', 'pre-prod-cluster', 'prod-cluster'
+    name: gke-platform-engineering # Exemplo: 'dev-cluster', 'int-cluster', 'pre-prod-cluster', 'prod-cluster'
     namespace: nginx # Namespace onde o cert-manager será instalado no cluster de destino
   syncPolicy:
     automated:
