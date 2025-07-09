@@ -10,7 +10,7 @@ spec:
     targetRevision: HEAD
     path: environments/devops-labs/cluster-config/manifests/deployments/nginx-example
   destination:
-    name: gke-platform-engineering # Exemplo: 'dev-cluster', 'int-cluster', 'pre-prod-cluster', 'prod-cluster'
+    name: https://34.95.151.58 # Exemplo: 'dev-cluster', 'int-cluster', 'pre-prod-cluster', 'prod-cluster'
     namespace: nginx # Namespace onde o cert-manager será instalado no cluster de destino
   syncPolicy:
     automated:
