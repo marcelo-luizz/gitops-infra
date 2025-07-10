@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-integration # Nome da sua Application
+  namespace: argocd # Namespace onde o recurso Application será criado no cluster Argo CD
+  annotations:
+    argocd.argoproj.io/sync-wave: '1' # Mantido, útil para ordem de sincronização
+spec:
+  project: default # Ou o nome do seu projeto Argo CD (ex: 'int-app' como no seu exemplo original)
+  sources: # Use 'sources' (plural) se você tiver múltiplos fontes, ou 'source' (singular)
+    - repoURL: 'https://github.com/marcelo-luizz/gitops-infra.git' # Seu repositório Git
+      targetRevision: main # A branch, tag ou commit que você quer monitorar
+      path: apps/devops-labs/manifests # O caminho dentro do seu repositório onde os manifests estão
+  destination:
+    # ATENÇÃO: Substitua pelo nome do cluster configurado no Argo CD
+    # Se for o cluster onde o Argo CD está rodando, geralmente é 'in-cluster'
+    # Se for um cluster remoto registrado, use o 'name' ou 'server' dele
+    name: in-cluster # Exemplo: 'in-cluster' ou o nome do seu cluster configurado (ex: 'kind', 'seu-cluster-gke')
+    namespace: nginx # Namespace no cluster de destino onde os recursos serão aplicados
+
+  syncPolicy:
+    automated: # Permite sincronização automática
+      prune: true # Remove recursos que não estão mais no Git
+      selfHeal: true # Corrige desvios do estado desejado
+    syncOptions:
+      - CreateNamespace=true # Cria o namespace de destino se ele não existir
+      - ServerSideApply=true # Usa Server-Side Apply para evitar conflitos de merge
