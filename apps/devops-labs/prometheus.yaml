@@ -1,36 +1,45 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: prometheus-integration
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '3'
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
     chart: kube-prometheus-stack
-    targetRevision: "58.2.0" # Use a stable and recent version
+    targetRevision: "58.2.0" # Pode ser parametrizado se necessário, mas mantendo fixo aqui por simplicidade
     helm:
+      # Valores que podem ser sobrescritos
+      parameters:
+        - name: grafana.enabled
+          value: "false"
+        - name: grafana.adminPassword
+          value: "mudar-essa-senha-prod" # **ATENÇÃO: Mude esta senha em produção! Considere usar um Secret para isso.**
+        - name: prometheus.prometheusSpec.retention
+          value: "30d" # Exemplo: 30 dias de retenção
+        - name: prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
+          value: "custom-storage-class" # Sua StorageClass personalizada
+        - name: prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage
+          value: "100Gi" # Ajuste o tamanho do armazenamento conforme necessário
+        - name: alertmanager.enabled
+          value: "true"
+      # Outros valores Helm que não precisam ser parametrizados ou são mais complexos
       values: |
-        grafana:
-          enabled: true
-          adminPassword: "1234789@#!" # CHANGE THIS IN PRODUCTION
+        # Outras configurações que você queira manter fixas ou que não são facilmente parametrizáveis
+        # A seção 'values' ainda é útil para configurações mais complexas ou multilinhas
+        # Por exemplo, se você tivesse um bloco YAML grande que não se encaixa bem em 'parameters'
+        # Você pode usar 'parameters' para sobrescrever valores dentro deste 'values'
         prometheus:
           prometheusSpec:
-            retention: 15d # Example: Retain metrics for 15 days
-            storageSpec:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: standard # Replace with your storage class
-                  resources:
-                    requests:
-                      storage: 50Gi # Adjust storage as needed
-        alertmanager:
-          enabled: true
+            ruleSelectorNilUsesHelmValues: false # Exemplo de uma configuração que pode não ser parametrizada diretamente
   destination:
     name: in-cluster
-    namespace: monitoring # Or your preferred namespace
+    namespace: monitoring # Ou seu namespace preferido
   syncPolicy:
     automated:
       prune: true
