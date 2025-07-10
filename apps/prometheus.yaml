@@ -2,7 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: prometheus-devops-labs
-  namespace: sistemas # Onde a Application será criada no cluster devops
+  namespace: sistemas
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io# Onde a Application será criada no cluster devops
 spec:
   project: default
   source:
