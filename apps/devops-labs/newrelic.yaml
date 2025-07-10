@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://helm-charts.newrelic.com
-    chart: newrelic-bundle
+    chart: nri-bundle
     targetRevision: 5.0.120
     helm:
       parameters:
