@@ -13,18 +13,9 @@ spec:
     targetRevision: 2.31.0
     helm:
       parameters:
-        - name: installCRDs
-          value: "true" 
         - name: metrics.enabled
           value: "true" 
-        - name: metrics.serviceMonitor.enabled
-          value: "true" 
-        - name: controller.replicas
-          value: "2" 
-        # - name: controller.serviceAccount.create
-        #   value: "true"
-        # - name: controller.serviceAccount.name
-        #   value: "argo-rollouts-controller" # Nome da ServiceAccount
+
   destination:
     name: in-cluster
     namespace: argo-rollouts
