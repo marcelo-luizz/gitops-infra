@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-test
+  labels:
+    app: nginx-test
+spec:
+  replicas: 1 # Você pode aumentar para 2 ou 3 se quiser testar múltiplas réplicas
+  selector:
+    matchLabels:
+      app: nginx-test
+  template:
+    metadata:
+      labels:
+        app: nginx-test
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest # Imagem Nginx estável e comum
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service-test
+  labels:
+    app: nginx-test
+spec:
+  selector:
+    app: nginx-test
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP # Tipo mais comum para serviços internos.
+                  # Se quiser acessar de fora do cluster, mude para NodePort ou LoadBalancer.
