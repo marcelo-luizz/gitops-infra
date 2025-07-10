@@ -10,8 +10,17 @@ spec:
     targetRevision: v1.14.4
     chart: cert-manager
     helm:
-      valueFiles:
-        - ./cert-manager/values.yaml # Values específicos do ambiente
+      parameters:
+        # installCRDs: true
+        - name: installCRDs
+          value: "true" # Valores booleanos em Helm parameters devem ser strings "true" ou "false"
+        - name: webhook.limits.ephemeral-storage
+          value: 500Mi # Valores de string (como "500Mi") não precisam de aspas, mas é boa prática para clareza
+        - name: startupapicheck.enabled
+          value: "false"
+        - name: resources.limits.ephemeral-storage
+          value: 500Mi
+
   destination:
     name: in-cluster # Exemplo: 'dev-cluster', 'int-cluster', 'pre-prod-cluster', 'prod-cluster'
     namespace: cert-manager # Namespace onde o cert-manager será instalado no cluster de destino
@@ -21,3 +30,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true # Adicionei este do seu exemplo que funciona, pode ser importante
