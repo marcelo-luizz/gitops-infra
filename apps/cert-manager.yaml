@@ -2,7 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: cert-manager-devops-labs
-  namespace: argocd # Onde a Application será criada no cluster devops
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io# Onde a Application será criada no cluster devops
 spec:
   project: default
   source:
