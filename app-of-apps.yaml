@@ -5,7 +5,7 @@ metadata:
 spec:
   destination:
     name: in-cluster
-    namespace: sistemas
+    namespace: argocd
   source:
     path: apps
     repoURL: 'https://github.com/marcelo-luizz/gitops-infra'
