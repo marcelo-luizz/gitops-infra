@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: "58.2.0" # Use a stable and recent version
+    helm:
+      values: |
+        grafana:
+          enabled: true
+          adminPassword: "1234789@#!" # CHANGE THIS IN PRODUCTION
+        prometheus:
+          prometheusSpec:
+            retention: 15d # Example: Retain metrics for 15 days
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: standard # Replace with your storage class
+                  resources:
+                    requests:
+                      storage: 50Gi # Adjust storage as needed
+        alertmanager:
+          enabled: true
+  destination:
+    name: in-cluster
+    namespace: monitoring # Or your preferred namespace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
