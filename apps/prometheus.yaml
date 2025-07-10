@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-devops-labs
+  namespace: default # Onde a Application será criada no cluster devops
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+ # Repositório do Helm chart
+    targetRevision: 27.20.1
+    chart: prometheus
+    helm:
+      valueFiles:
+        - prometheus/values.yaml # Values específicos do ambiente
+  destination:
+    name: in-cluster # Exemplo: 'dev-cluster', 'int-cluster', 'pre-prod-cluster', 'prod-cluster'
+    namespace: prometheus # Namespace onde o external-secrets será instalado no cluster de destino
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
