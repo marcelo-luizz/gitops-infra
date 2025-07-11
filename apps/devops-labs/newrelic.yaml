@@ -6,7 +6,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: gke-platform-engineering
   source:
     repoURL: https://helm-charts.newrelic.com
     chart: nri-bundle
@@ -69,7 +69,7 @@ spec:
         - name: global.verboseLog
           value: "false" 
   destination:
-    name: in-cluster
+    name: gke-platform-engineering
     namespace: newrelic
   syncPolicy:
     automated:
