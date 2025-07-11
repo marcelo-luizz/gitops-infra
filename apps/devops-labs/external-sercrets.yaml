@@ -6,7 +6,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: gke-platform-engineering
   source:
     repoURL: https://charts.external-secrets.io
     chart: external-secrets
@@ -17,7 +17,7 @@ spec:
           value: 'true'
   destination:
     namespace: external-secrets
-    name: in-cluster
+    name: gke-platform-engineering
   syncPolicy:
     automated: {}
     syncOptions:
