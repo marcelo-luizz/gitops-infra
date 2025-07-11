@@ -1,33 +1,33 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: prometheus-integration
-#   namespace: argocd
-#   annotations:
-#     argocd.argoproj.io/sync-wave: '3'
-#   finalizers:
-#     - resources-finalizer.argocd.argoproj.io
-# spec:
-#   project: gke-platform-engineering
-#   source:
-#     repoURL: https://prometheus-community.github.io/helm-charts
-#     chart: kube-prometheus-stack
-#     targetRevision: "58.2.0" # Pode ser parametrizado se necessário, mas mantendo fixo aqui por simplicidade
-#     helm:
-#       parameters:
-#         - name: grafana.enabled
-#           value: "false"
-#         - name: grafana.adminPassword
-#           value: "mudar-essa-senha-prod" # **ATENÇÃO: Mude esta senha em produção! Considere usar um Secret para isso.**
-#         - name: prometheus.prometheusSpec.retention
-#           value: "30d" # Exemplo: 30 dias de retenção
-#   destination:
-#     name: gke-platform-engineering
-#     namespace: monitoring # Ou seu namespace preferido
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
-#     syncOptions:
-#       - CreateNamespace=true
-#       - ServerSideApply=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-integration
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '3'
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: "58.2.0" # Pode ser parametrizado se necessário, mas mantendo fixo aqui por simplicidade
+    helm:
+      parameters:
+        - name: grafana.enabled
+          value: "false"
+        - name: grafana.adminPassword
+          value: "mudar-essa-senha-prod" # **ATENÇÃO: Mude esta senha em produção! Considere usar um Secret para isso.**
+        - name: prometheus.prometheusSpec.retention
+          value: "30d" # Exemplo: 30 dias de retenção
+  destination:
+    name: in-cluster
+    namespace: monitoring # Ou seu namespace preferido
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
