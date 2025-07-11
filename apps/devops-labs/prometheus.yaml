@@ -28,15 +28,6 @@ spec:
           value: "100Gi" # Ajuste o tamanho do armazenamento conforme necessário
         - name: alertmanager.enabled
           value: "true"
-      # Outros valores Helm que não precisam ser parametrizados ou são mais complexos
-      values: |
-        # Outras configurações que você queira manter fixas ou que não são facilmente parametrizáveis
-        # A seção 'values' ainda é útil para configurações mais complexas ou multilinhas
-        # Por exemplo, se você tivesse um bloco YAML grande que não se encaixa bem em 'parameters'
-        # Você pode usar 'parameters' para sobrescrever valores dentro deste 'values'
-        prometheus:
-          prometheusSpec:
-            ruleSelectorNilUsesHelmValues: false # Exemplo de uma configuração que pode não ser parametrizada diretamente
   destination:
     name: in-cluster
     namespace: monitoring # Ou seu namespace preferido
