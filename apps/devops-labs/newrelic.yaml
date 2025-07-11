@@ -1,80 +1,80 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: newrelic-devops-labs
-  namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
-spec:
-  project: gke-platform-engineering
-  source:
-    repoURL: https://helm-charts.newrelic.com
-    chart: nri-bundle
-    targetRevision: 5.0.120
-    helm:
-      parameters:
-        - name: newrelic-infrastructure.enabled
-          value: "true"
-        - name: nri-prometheus.enabled
-          value: "true"
-        - name: nri-metadata-injection.enabled
-          value: "true"
-        - name: kube-state-metrics.enabled
-          value: "true"
-        - name: nri-kube-events.enabled
-          value: "true"
-        - name: newrelic-logging.enabled
-          value: "false"
-        - name: newrelic-pixie.enabled
-          value: "false"
-        - name: newrelic-eapm-agent.enabled
-          value: "false"
-        - name: k8s-agents-operator.enabled
-          value: "true"
-        - name: pixie-chart.enabled
-          value: "false"
-        - name: newrelic-infra-operator.enabled
-          value: "false"
-        - name: newrelic-prometheus-agent.enabled
-          value: "false"
-        - name: newrelic-k8s-metrics-adapter.enabled
-          value: "false"
-        # global settings
-        - name: global.cluster
-          value: "gke-lab"
-        # - name: global.licenseKey
-        #   value: "" # <-- Preencha com sua chave de licença New Relic
-        # - name: global.insightsKey
-        #   value: "" # <-- Preencha com sua chave de Insights New Relic (se aplicável)
-        # - name: global.customSecretName
-        #   value: "newrelic-license-key-secret"
-        # - name: global.customSecretLicenseKey
-        #   value: "new_relic_license_key"
-        - name: global.hostNetwork
-          value: "false" 
-        - name: global.priorityClassName
-          value: ""
-        - name: global.lowDataMode
-          value: "true"
-        - name: global.privileged
-          value: "true"
-        - name: global.fargate
-          value: "false" 
-        - name: global.proxy
-          value: "" 
-        - name: global.nrStaging
-          value: "false" 
-        - name: global.fedramp.enabled
-          value: "false"
-        - name: global.verboseLog
-          value: "false" 
-  destination:
-    name: gke-platform-engineering
-    namespace: newrelic
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: newrelic-devops-labs
+#   namespace: argocd
+#   finalizers:
+#   - resources-finalizer.argocd.argoproj.io
+# spec:
+#   project: gke-platform-engineering
+#   source:
+#     repoURL: https://helm-charts.newrelic.com
+#     chart: nri-bundle
+#     targetRevision: 5.0.120
+#     helm:
+#       parameters:
+#         - name: newrelic-infrastructure.enabled
+#           value: "true"
+#         - name: nri-prometheus.enabled
+#           value: "true"
+#         - name: nri-metadata-injection.enabled
+#           value: "true"
+#         - name: kube-state-metrics.enabled
+#           value: "true"
+#         - name: nri-kube-events.enabled
+#           value: "true"
+#         - name: newrelic-logging.enabled
+#           value: "false"
+#         - name: newrelic-pixie.enabled
+#           value: "false"
+#         - name: newrelic-eapm-agent.enabled
+#           value: "false"
+#         - name: k8s-agents-operator.enabled
+#           value: "true"
+#         - name: pixie-chart.enabled
+#           value: "false"
+#         - name: newrelic-infra-operator.enabled
+#           value: "false"
+#         - name: newrelic-prometheus-agent.enabled
+#           value: "false"
+#         - name: newrelic-k8s-metrics-adapter.enabled
+#           value: "false"
+#         # global settings
+#         - name: global.cluster
+#           value: "gke-lab"
+#         # - name: global.licenseKey
+#         #   value: "" # <-- Preencha com sua chave de licença New Relic
+#         # - name: global.insightsKey
+#         #   value: "" # <-- Preencha com sua chave de Insights New Relic (se aplicável)
+#         # - name: global.customSecretName
+#         #   value: "newrelic-license-key-secret"
+#         # - name: global.customSecretLicenseKey
+#         #   value: "new_relic_license_key"
+#         - name: global.hostNetwork
+#           value: "false" 
+#         - name: global.priorityClassName
+#           value: ""
+#         - name: global.lowDataMode
+#           value: "true"
+#         - name: global.privileged
+#           value: "true"
+#         - name: global.fargate
+#           value: "false" 
+#         - name: global.proxy
+#           value: "" 
+#         - name: global.nrStaging
+#           value: "false" 
+#         - name: global.fedramp.enabled
+#           value: "false"
+#         - name: global.verboseLog
+#           value: "false" 
+#   destination:
+#     name: gke-platform-engineering
+#     namespace: newrelic
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ServerSideApply=true
