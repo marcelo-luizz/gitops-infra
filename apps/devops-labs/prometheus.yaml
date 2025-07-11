@@ -14,7 +14,6 @@ spec:
     chart: kube-prometheus-stack
     targetRevision: "58.2.0" # Pode ser parametrizado se necessário, mas mantendo fixo aqui por simplicidade
     helm:
-      # Valores que podem ser sobrescritos
       parameters:
         - name: grafana.enabled
           value: "false"
@@ -22,12 +21,6 @@ spec:
           value: "mudar-essa-senha-prod" # **ATENÇÃO: Mude esta senha em produção! Considere usar um Secret para isso.**
         - name: prometheus.prometheusSpec.retention
           value: "30d" # Exemplo: 30 dias de retenção
-        - name: prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
-          value: "custom-storage-class" # Sua StorageClass personalizada
-        - name: prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage
-          value: "100Gi" # Ajuste o tamanho do armazenamento conforme necessário
-        - name: alertmanager.enabled
-          value: "true"
   destination:
     name: in-cluster
     namespace: monitoring # Ou seu namespace preferido
