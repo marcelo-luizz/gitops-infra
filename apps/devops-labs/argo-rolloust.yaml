@@ -6,7 +6,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: gke-platform-engineering
   source:
     repoURL: https://argoproj.github.io/argo-helm 
     chart: argo-rollouts
@@ -19,7 +19,7 @@ spec:
           value: "true"
 
   destination:
-    name: in-cluster
+    name: gke-platform-engineering
     namespace: argo-rollouts
   syncPolicy:
     automated:
